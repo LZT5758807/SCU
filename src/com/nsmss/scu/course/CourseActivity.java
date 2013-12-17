@@ -421,7 +421,7 @@ public class CourseActivity extends FragmentActivity {
 		}
 		return false;
 	}
-	
+	 
 	/**
 	 * ´¦Àí¿Î³Ì
 	 */
