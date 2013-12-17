@@ -29,6 +29,14 @@ local.properties
 .buildpath
 
 
+
+#################
+## Android
+#################
+# Generated Java Files
+gen/
+
+
 #################
 ## Visual Studio
 #################
