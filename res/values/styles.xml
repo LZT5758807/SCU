@@ -171,6 +171,10 @@
         <item name="android:background">@drawable/editbox_login</item>
     </style>
     
+        <style name="my_edittext_style_change_password" parent="@android:style/Widget.EditText">
+        <item name="android:background">@drawable/edittext_change_password</item>
+    </style>
+    
     <style name="MyCheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
     <item name="android:button">@drawable/check_login_bg</item>
     </style>

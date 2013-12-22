@@ -41,7 +41,7 @@ public class NetHelper {
 		public String tmpStringName;
 		public String tmpStringNum;
 		public String tmpStringCredit;
-		public String tmpStringAttr;
+		public String tmpStringAttr;                    
 		public String tmpStringExam;
 		public String tmpStringTeacher;
 		public String tmpStringWeeks;
@@ -96,9 +96,114 @@ public class NetHelper {
 	}
 	
 	/**
+	 * 修改密码
+	 * @param oldPass 原始密码
+	 * @param newPass1 新设密码
+	 * @param newPass2 再次输入的新设密码
+	 * @return 错误代码
+	 */
+	public String changePassword(UserData uData,String oldPass, String newPass1,String newPass2) {
+		try {
+			String session = getSession(uData, false);
+			if (session.length() <= 3) {
+				session = getSession(uData, true);
+			}
+			
+			Connection con = Jsoup.connect("http://202.115.47.141/modifyPassWordAction.do?oper=xgmm")
+					.cookie("JSESSIONID", session)
+					.data("yhlbdm", "01")
+					.data("zjh", uData.getNum())
+					.data("oldPass", oldPass)
+					.data("newPass1",newPass1)
+					.data("newPass2",newPass2)
+					.timeout(10000)
+					.method(Method.POST);
+			Response response = con.execute();
+			Document doc = response.parse();
+			
+			Elements prompt = doc.getElementsContainingText("!");
+			String strong = prompt.text().trim();	
+			
+			if(strong.contains("输入的当前密码"))
+			{
+				return "101";	// TODO 错误代码101：原始密码输入
+			}
+			else if(strong.contains("密码不正确"))
+			{
+				return "102";	// TODO 错误代码102：密码不正确
+			} else
+			{
+				return session; // TODO 修改成功
+			}
+		} catch (Exception e)
+		{
+			return "104"; // TODO 错误代码104：连接超时或其他异常
+		}
+	}
+
+	/**
+	 * 获取考试信息
+	 * 
+	 * @param uData用户数据
+	 * @return SESSION
+	 */
+	public ArrayList<Map<String, String>> examInfo(UserData uData)
+	{
+		ArrayList <Map<String, String>> data = new ArrayList<Map<String, String>>();;
+		try
+		{
+			String session = getSession(uData, false);
+			if (session.length() <= 3) {
+				session = getSession(uData, true);
+			}
+			
+			/** 联网，连接中包含Cookie信息 **/
+			Document doc = Jsoup.connect("http://202.115.47.141/ksApCxAction.do?oper=getKsapXx")
+					.cookie("JSESSIONID", session)
+					.timeout(10000)
+					.get();
+			Elements displayTag = doc.select(".displayTag").eq(1).select("tbody");
+			Elements tblView_tr = displayTag.select("tr");
+
+			/** 解析表格，把文本添加到与列表关联的data中 **/
+			String tmpStringSubject = new String();
+			String tmpStringTime = new String();
+			String tmpStringPlace = new String();
+			Map<String, String> tmpMap = new HashMap<String, String>();
+
+			for (Element tblView_line : tblView_tr)
+			{
+				tmpStringSubject = tblView_line.select("td").eq(4).text().trim();
+				tmpStringTime = "时间：" + tblView_line.select("td").eq(5).text().trim() 
+						+ "周 周" + tblView_line.select("td").eq(6).text().trim() + "  " 
+						+ tblView_line.select("td").eq(7).text().trim();
+				tmpStringPlace = "地点：" + tblView_line.select("td").eq(1).text().trim() 
+						+ tblView_line.select("td").eq(2).text().trim() 
+						+ tblView_line.select("td").eq(3).text().trim();
+
+				if (tmpStringSubject.length() != 0)
+				{
+					tmpMap = new HashMap<String, String>();
+					tmpMap.put("subject", tmpStringSubject);
+					tmpMap.put("time", tmpStringTime);
+					tmpMap.put("place", tmpStringPlace);
+					data.add(tmpMap);
+				}
+			}
+		} catch (Exception e)
+		{
+			return null; // TODO 错误代码104：连接超时或其他异常
+		}
+		return data;
+	}
+
+	/**
 	 * 获取用户在教务系统的SESSION值
-	 * @param uData 用户数据
-	 * @param force 是否强制更新SESSION
+	 * 
+	 * @param uData
+	 *            用户数据
+	 * @param force
+	 *            是否强制更新SESSION
 	 * @return SESSION
 	 */
 	private String getSession(UserData uData, boolean force) {

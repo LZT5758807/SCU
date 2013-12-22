@@ -120,7 +120,7 @@
                 android:layout_weight="7"
                 android:background="@drawable/btn_login"
                 android:text="@string/login_input_login"
-                android:textColor="#892f2d"
+                android:textColor="@color/scu__defaultLoginText"
                 android:textSize="20sp" />
 
         </LinearLayout>

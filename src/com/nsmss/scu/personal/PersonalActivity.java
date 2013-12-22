@@ -263,6 +263,12 @@ public class PersonalActivity extends Activity {
 				jumpToRoll();
 			}
 		});
+		passwdView.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				jumpToPasswd();
+			}
+		});
 	}
 	
 	private void jumpToMain() {
@@ -276,6 +282,14 @@ public class PersonalActivity extends Activity {
 	private void jumpToRoll() {
 		Intent intent=new Intent();
 		intent.setClass(PersonalActivity.this, RollActivity.class);
+		startActivity(intent);
+		overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+		finish();
+	}
+	
+	private void jumpToPasswd() {
+		Intent intent=new Intent();
+		intent.setClass(PersonalActivity.this, ChangePasswordActivity.class);
 		startActivity(intent);
 		overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
 		finish();

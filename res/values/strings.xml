@@ -18,13 +18,17 @@
     <string name="loading_tip">加载中...</string>
     <string name="title_activity_login">SCU</string>
     <string name="hello_world">Hello world!</string>
-    
     <string name="login_input_usr">请输入学号</string>
     <string name="login_input_pswd">请输入密码</string>
     <string name="login_input_login">登        录</string>
     <string name="login_input_savepswd">记住账号</string>
     <string name="login_input_autologin">自动登录</string>
-    
     <string name="personal_roll_title">学籍信息</string>
+    <string name="personal_change_passwd_title">修改密码</string>
+    <string name="personal_change_passwd_oldpasswd">原始密码:</string>
+    <string name="personal_change_passwd_newpasswd1">新设密码:</string>
+    <string name="personal_change_passwd_newpasswd2">确认密码:</string>
+    <string name="personal_change_passwd_submit">提  交</string>
+    <string name="exam_title">考试信息</string>
 
 </resources>

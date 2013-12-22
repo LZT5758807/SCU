@@ -15,6 +15,7 @@ import com.nsmss.scu.dao.GlobalInfoDao;
 import com.nsmss.scu.dao.PersonalInfoDao;
 import com.nsmss.scu.dao.RollInfoDao;
 import com.nsmss.scu.dao.UserDataDao;
+import com.nsmss.scu.exam.ExamActivity;
 import com.nsmss.scu.login.LoginActivity;
 import com.nsmss.scu.personal.PersonalActivity;
 
@@ -53,6 +54,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 	View refreshView;
 	View newsView;
 	View courseView;
+	View examView;
 	TextView dateTextView;
 	TextView weekTextView;
 	
@@ -242,6 +244,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 		refreshView = findViewById(R.id.Btn_Main_Refresh);
 		newsView = findViewById(R.id.Btn_Main_Func_1);
 		courseView = findViewById(R.id.Btn_Main_Func_2);
+		examView = findViewById(R.id.Btn_Main_Func_3);
 		dateTextView = (TextView) findViewById(R.id.scu_main_TextDate);
 		weekTextView = (TextView) findViewById(R.id.scu_main_TextWeeks);
 	}
@@ -272,6 +275,15 @@ public class MainActivity extends Activity implements View.OnClickListener{
     		public void onClick(View v) {
     			Intent intent=new Intent();
     			intent.setClass(MainActivity.this, CourseActivity.class);
+    			startActivity(intent);
+    			overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+    			finish();
+            }    
+    	});
+		examView.setOnClickListener(new Button.OnClickListener(){
+    		public void onClick(View v) {
+    			Intent intent=new Intent();
+    			intent.setClass(MainActivity.this, ExamActivity.class);
     			startActivity(intent);
     			overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
     			finish();
